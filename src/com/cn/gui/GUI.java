@@ -23,7 +23,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
 public class GUI {
-	//123456
+	// 123456
 	/**
 	 * 组件
 	 */
@@ -210,46 +210,42 @@ public class GUI {
 						System.out.println("----等待连接----");
 						receiver = server.accept();
 //						System.out.println("获取许可");
-						
-						//建瓯阿瑟东
+
+						// 建瓯阿瑟东
 						targetIP = receiver.getInetAddress().getHostAddress();
 //					System.out.println(receiver.getInetAddress().getHostAddress());
 
 						dataInputStream = new DataInputStream(receiver.getInputStream());
-						
-						if(!isConnecting) {
+
+						if (!isConnecting) {
 							System.out.println("获取许可...");
 							connect();
 							int decision = JOptionPane.showConfirmDialog(frame, targetIP + "请求连接");
-	//						System.out.println(decision);
+							// System.out.println(decision);
 							if (decision != 0) {
 //								System.out.println("-----拒绝访问-----");
 								outputStream.writeUTF("REFUSE");
 								outputStream.flush();
 //								Thread.sleep(300);
 								throw new IOException("拒绝对方访问");
-							}
-							else {
+							} else {
 								outputStream.writeUTF("ACCEPT");
 								outputStream.flush();
 							}
-	//						connect();
+							// connect();
 							isConnected = true;
 							System.out.println("----连接成功----");
-							btnConnect.setText("已连接");
-							JOptionPane.showMessageDialog(frame, "连接成功");
-						}
-						else {
+							btnConnectSuccess();
+						} else {
 							System.out.println("------获取许可----");
 							String acc = dataInputStream.readUTF();
 							System.out.println(acc);
-							if(acc.equals("REFUSE")) {
+							if (acc.equals("REFUSE")) {
 								System.out.println("拒绝访问");
 								JOptionPane.showMessageDialog(frame, "拒绝访问");
 								throw new IOException();
 							}
-							btnConnect.setText("已连接");
-							JOptionPane.showMessageDialog(frame, "连接成功");
+							btnConnectSuccess();
 							isConnected = true;
 						}
 						tfTargetIP.setText(targetIP);
@@ -270,8 +266,8 @@ public class GUI {
 						// 重新创建服务
 						isConnecting = false;
 						isConnected = false;
-						btnConnect.setEnabled(true);
-//					createServer();
+						btnConnectReset();
+						// createServer();
 //					System.out.println(Thread.interrupted());
 					}
 				}
@@ -298,12 +294,13 @@ public class GUI {
 					System.out.println("-----连接已断开---------");
 //				ChatterUtils.close(outputStream, connector, dataInputStream, receiver, server);
 				isConnected = false;
-				btnConnect.setEnabled(true);
-//				System.out.println("-----发送失败---------");
+				btnConnectReset();
+				// System.out.println("-----发送失败---------");
 			}
 
 		} else {
 			System.out.println("-----尚未连接-----");
+			btnConnectReset();
 			JOptionPane.showMessageDialog(frame, "尚未连接");
 		}
 	}
@@ -312,5 +309,15 @@ public class GUI {
 		String date = new Date().toString();
 //		txtChatArea.insert(host+" "+date+":\n"+msg+"\n", txtChatArea.getRows());
 		txtChatArea.append(host + " " + date + ":\r\n" + msg + "\r\n\r\n");
+	}
+
+	private void btnConnectSuccess() {
+		btnConnect.setText("已连接");
+		JOptionPane.showMessageDialog(frame, "连接成功");
+	}
+	
+	private void btnConnectReset() {
+		btnConnect.setText("连接");
+		btnConnect.setEnabled(true);
 	}
 }
