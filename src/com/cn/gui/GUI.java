@@ -23,6 +23,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
 public class GUI {
+	//123456
 	/**
 	 * 组件
 	 */
