@@ -264,6 +264,7 @@ public class GUI {
 						System.out.println("----服务创建失败------");
 						ChatterUtils.close(dataInputStream, receiver, server);
 						// 重新创建服务
+						JOptionPane.showMessageDialog(frame, "连接失败");
 						isConnecting = false;
 						isConnected = false;
 						btnConnectReset();
