@@ -177,6 +177,8 @@ public class GUI {
 	private void connect() {
 		try {
 			if (!targetIP.equals("")) {
+				btnConnect.setEnabled(false);
+				btnConnect.setText("连接中...");
 				connector = new Socket(targetIP, 8888);
 				outputStream = new DataOutputStream(connector.getOutputStream());
 				isConnecting = true;
@@ -189,6 +191,8 @@ public class GUI {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("找不到服务器");
+			btnConnect.setEnabled(true);
+			JOptionPane.showMessageDialog(frame, "找不到服务器");
 			isConnected = false;
 		}
 	}
@@ -232,6 +236,8 @@ public class GUI {
 	//						connect();
 							isConnected = true;
 							System.out.println("----连接成功----");
+							btnConnect.setText("已连接");
+							JOptionPane.showMessageDialog(frame, "连接成功");
 						}
 						else {
 							System.out.println("------获取许可----");
@@ -262,6 +268,7 @@ public class GUI {
 						// 重新创建服务
 						isConnecting = false;
 						isConnected = false;
+						btnConnect.setEnabled(true);
 //					createServer();
 //					System.out.println(Thread.interrupted());
 					}
@@ -289,11 +296,13 @@ public class GUI {
 					System.out.println("-----连接已断开---------");
 //				ChatterUtils.close(outputStream, connector, dataInputStream, receiver, server);
 				isConnected = false;
+				btnConnect.setEnabled(true);
 //				System.out.println("-----发送失败---------");
 			}
 
 		} else {
 			System.out.println("-----尚未连接-----");
+			JOptionPane.showMessageDialog(frame, "尚未连接");
 		}
 	}
 
