@@ -248,6 +248,8 @@ public class GUI {
 								JOptionPane.showMessageDialog(frame, "拒绝访问");
 								throw new IOException();
 							}
+							btnConnect.setText("已连接");
+							JOptionPane.showMessageDialog(frame, "连接成功");
 							isConnected = true;
 						}
 						tfTargetIP.setText(targetIP);
