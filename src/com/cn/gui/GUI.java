@@ -191,7 +191,7 @@ public class GUI {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("找不到服务器");
-			btnConnect.setEnabled(true);
+			btnConnectReset();
 			JOptionPane.showMessageDialog(frame, "找不到服务器");
 			isConnected = false;
 		}
